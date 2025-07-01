@@ -7,7 +7,7 @@ CSV 파일을 업로드하면 불량 확률과 주요 변수의 중요도를 시
 - 예측 결과 엑셀 다운로드
 - 변수 중요도 그래프 제공
 
-  * 실행 : https://kodaehongdevtool-forskchemicalapply.streamlit.app/ *
+    * 실행 : https://kodaehongdevtool-forskchemicalapply.streamlit.app/ *
 
 -------------------------------------------------------------------------------------------
 
