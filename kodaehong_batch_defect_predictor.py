@@ -42,7 +42,7 @@ def train_model():
 model, feature_names, feature_importances = train_model()
 
 # Streamlit App UI
-st.title("의약품 생산 배치 불량 예측 툴")
+st.title("🔍 의약품 생산 배치 불량 예측 Tool")
 st.markdown("""
 불량률을 사전에 예측하여 생산 효율성과 품질을 높일 수 있습니다. 
 
@@ -82,7 +82,7 @@ if uploaded_file is not None:
         )
 
         # Feature importance plot (Vertical bar chart for clarity, English-only, rotated labels)
-        st.subheader("Feature Importance")
+        st.subheader("📊 주요 변수 중요도")
         importance_df = pd.DataFrame({
             "Feature": feature_names,
             "Importance": feature_importances
@@ -102,12 +102,13 @@ if uploaded_file is not None:
     else:
         st.error(f"❗ 필수 컬럼이 누락되었습니다: {required_columns}")
 else:
-    st.info("👈 좌측에서 CSV 파일을 업로드하시면 예측 결과가 표시됩니다.")
+    st.info("👆 위에서 CSV 파일을 업로드하시면 예측 결과가 표시됩니다.")
 
 # Custom footer
 st.markdown("""
 ---
 [🔗 GitHub 저장소 바로가기](https://github.com/kod89/hypermax/tree/main)
 
-테스트 결과를 확인하려면 샘플 데이터를 다운로드하여 업로드하세요.
+테스트 결과를 확인하려면 위 링크에서 샘플 데이터를 다운로드하여 업로드하세요.
+
 """)
