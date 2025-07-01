@@ -49,6 +49,10 @@ uploaded_file = st.file_uploader("📁 CSV 파일 업로드", type=["csv"])
 
 if uploaded_file is not None:
     input_df = pd.read_csv(uploaded_file)
+
+    # ⛏️ 컬럼 이름에서 단위 제거 (예: 'Temperature_C (℃)' → 'Temperature_C')
+    input_df.columns = input_df.columns.str.replace(r"\s*\(.*?\)", "", regex=True)
+
     required_columns = ["Temperature_C", "Pressure_bar", "MixingSpeed_rpm", "pH", "Yield_percent", "Contaminant_ppm"]
 
     if all(col in input_df.columns for col in required_columns):
