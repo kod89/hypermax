@@ -77,18 +77,18 @@ if uploaded_file is not None:
             mime='text/csv',
         )
 
-        # Feature importance plot
+        # Feature importance plot (Vertical bar chart for clarity)
         st.subheader("🔍 주요 변수 중요도 시각화")
         importance_df = pd.DataFrame({
             "Feature": feature_names,
             "Importance": feature_importances
-        }).sort_values(by="Importance", ascending=True)
+        }).sort_values(by="Importance", ascending=False)
 
         fig, ax = plt.subplots(figsize=(8, 5))
-        bars = sns.barplot(x="Importance", y="Feature", data=importance_df, ax=ax, palette="Blues_d")
+        bars = sns.barplot(x="Feature", y="Importance", data=importance_df, ax=ax, palette="Blues_d")
         ax.set_title("🔧 변수 중요도 순위", fontsize=14)
-        ax.set_xlabel("Importance (중요도)")
-        ax.set_ylabel("Feature (변수명)")
+        ax.set_xlabel("Feature (변수명)")
+        ax.set_ylabel("Importance (중요도)")
         for container in ax.containers:
             ax.bar_label(container, fmt="%.2f", label_type="edge")
         fig.tight_layout()
