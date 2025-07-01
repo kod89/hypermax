@@ -79,3 +79,17 @@ else:
 
 # Deployment Info
 st.markdown("""
+---
+### ☁️ 배포 안내
+- **Streamlit Cloud**:
+  - [https://streamlit.io/cloud](https://streamlit.io/cloud) 에서 GitHub와 연동해 바로 배포 가능
+  - 이 코드를 `kodaehong_batch_defect_predictor.py`로 저장 후 GitHub 저장소에 올리고 Streamlit Cloud에서 연결하면 끝!
+
+- **AWS EC2 / Lightsail**:
+  - 인스턴스 생성 후 Python, pip 설치
+  - 본 파일 업로드 후 `streamlit run kodaehong_batch_defect_predictor.py`로 실행
+  - `nohup`, `tmux`, `screen` 등으로 서버 유지 가능
+
+배포에 도움이 필요하시면 언제든지 질문 주세요!
+""")
+
