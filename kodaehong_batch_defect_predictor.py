@@ -15,7 +15,7 @@ from sklearn.ensemble import RandomForestClassifier
 # Page style
 st.set_page_config(page_title="Batch Defect Predictor", layout="centered")
 sns.set_theme(style="whitegrid")
-plt.rcParams["font.family"] = "Arial"  # Use a universal font to avoid emoji/Unicode errors
+plt.rcParams["font.family"] = "Arial"
 
 # Dummy model training (to be replaced with actual model persistence in real use)
 def train_model():
@@ -81,18 +81,19 @@ if uploaded_file is not None:
             mime='text/csv',
         )
 
-        # Feature importance plot (Vertical bar chart for clarity)
-        st.subheader("주요 변수 중요도 시각화")
+        # Feature importance plot (Vertical bar chart for clarity, English-only, rotated labels)
+        st.subheader("Feature Importance")
         importance_df = pd.DataFrame({
             "Feature": feature_names,
             "Importance": feature_importances
         }).sort_values(by="Importance", ascending=False)
 
-        fig, ax = plt.subplots(figsize=(8, 5))
+        fig, ax = plt.subplots(figsize=(10, 6))
         bars = sns.barplot(x="Feature", y="Importance", data=importance_df, ax=ax, palette="Blues_d")
-        ax.set_title("변수 중요도 순위", fontsize=14)
-        ax.set_xlabel("변수명")
-        ax.set_ylabel("중요도")
+        ax.set_title("Feature Importance Ranking", fontsize=14)
+        ax.set_xlabel("Feature")
+        ax.set_ylabel("Importance")
+        ax.set_xticklabels(ax.get_xticklabels(), rotation=30, ha="right")
         for container in ax.containers:
             ax.bar_label(container, fmt="%.2f", label_type="edge")
         fig.tight_layout()
@@ -101,7 +102,7 @@ if uploaded_file is not None:
     else:
         st.error(f"❗ 필수 컬럼이 누락되었습니다: {required_columns}")
 else:
-    st.info("👆 위에서 CSV 파일을 업로드하시면 예측 결과가 표시됩니다.")
+    st.info("👈 좌측에서 CSV 파일을 업로드하시면 예측 결과가 표시됩니다.")
 
 # Custom footer
 st.markdown("""
