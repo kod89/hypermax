@@ -82,7 +82,7 @@ if uploaded_file is not None:
         )
 
         # Feature importance plot (Vertical bar chart for clarity)
-        st.subheader("주요 변수 중요도")
+        st.subheader("주요 변수 중요도 시각화")
         importance_df = pd.DataFrame({
             "Feature": feature_names,
             "Importance": feature_importances
