@@ -64,7 +64,12 @@ if uploaded_file is not None:
         st.success("✅ 예측 완료! 아래에서 결과를 확인하세요.")
         st.dataframe(input_df.style.background_gradient(cmap='Reds', subset=['Defect_Probability_%']))
 
-        csv = input_df.to_csv(index=False).encode('utf-8-sig')
+        # ✨ CSV 가독성 개선: 컬럼 순서 조정 및 소수점 제한
+        ordered_columns = ["Predicted_Defective", "Defect_Probability_%"] + required_columns
+        export_df = input_df[ordered_columns].copy()
+        export_df["Defect_Probability_%"] = export_df["Defect_Probability_%"].round(2)
+
+        csv = export_df.to_csv(index=False, encoding='utf-8-sig')
         st.download_button(
             label="📥 결과 CSV 다운로드",
             data=csv,
@@ -86,12 +91,13 @@ if uploaded_file is not None:
         ax.set_ylabel("Feature (변수명)")
         for container in ax.containers:
             ax.bar_label(container, fmt="%.2f", label_type="edge")
+        fig.tight_layout()
         st.pyplot(fig)
 
     else:
         st.error(f"❗ 필수 컬럼이 누락되었습니다: {required_columns}")
 else:
-    st.info("👈 좌측에서 CSV 파일을 업로드하시면 예측 결과가 표시됩니다.")
+    st.info("👆 위에서 CSV 파일을 업로드하시면 예측 결과가 표시됩니다.")
 
 # Deployment Info
 st.markdown("""
