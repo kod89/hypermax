@@ -1,3 +1,6 @@
+# This script requires Streamlit to run. Make sure you have Streamlit installed in your local Python environment.
+# Install via: pip install streamlit
+
 try:
     import streamlit as st
 except ModuleNotFoundError:
@@ -12,6 +15,7 @@ from sklearn.ensemble import RandomForestClassifier
 # Page style
 st.set_page_config(page_title="Batch Defect Predictor", layout="centered")
 sns.set_theme(style="whitegrid")
+plt.rcParams["font.family"] = "Arial"  # Use a universal font to avoid emoji/Unicode errors
 
 # Dummy model training (to be replaced with actual model persistence in real use)
 def train_model():
@@ -38,7 +42,7 @@ def train_model():
 model, feature_names, feature_importances = train_model()
 
 # Streamlit App UI
-st.title("💊 의약품 생산 배치 불량 예측 툴")
+st.title("의약품 생산 배치 불량 예측 툴")
 st.markdown("""
 불량률을 사전에 예측하여 생산 효율성과 품질을 높일 수 있습니다. 
 
@@ -61,8 +65,8 @@ if uploaded_file is not None:
         input_df['Predicted_Defective'] = predictions
         input_df['Defect_Probability_%'] = (proba * 100).round(2)
 
-        st.success("✅ 예측 완료! 아래에서 결과를 확인하세요.")
-        st.dataframe(input_df.style.background_gradient(cmap='Reds', subset=['Defect_Probability_%']))
+        st.success("예측 완료! 아래에서 결과를 확인하세요.")
+        st.dataframe(input_df.style.background_gradient(cmap='Reds', subset=['Defect_Probability_%']).format("{:.2f}"))
 
         # ✨ CSV 가독성 개선: 컬럼 순서 조정 및 소수점 제한
         ordered_columns = ["Predicted_Defective", "Defect_Probability_%"] + required_columns
@@ -78,7 +82,7 @@ if uploaded_file is not None:
         )
 
         # Feature importance plot (Vertical bar chart for clarity)
-        st.subheader("🔍 주요 변수 중요도 시각화")
+        st.subheader("주요 변수 중요도 시각화")
         importance_df = pd.DataFrame({
             "Feature": feature_names,
             "Importance": feature_importances
@@ -86,9 +90,9 @@ if uploaded_file is not None:
 
         fig, ax = plt.subplots(figsize=(8, 5))
         bars = sns.barplot(x="Feature", y="Importance", data=importance_df, ax=ax, palette="Blues_d")
-        ax.set_title("🔧 변수 중요도 순위", fontsize=14)
-        ax.set_xlabel("Feature (변수명)")
-        ax.set_ylabel("Importance (중요도)")
+        ax.set_title("변수 중요도 순위", fontsize=14)
+        ax.set_xlabel("변수명")
+        ax.set_ylabel("중요도")
         for container in ax.containers:
             ax.bar_label(container, fmt="%.2f", label_type="edge")
         fig.tight_layout()
@@ -97,10 +101,12 @@ if uploaded_file is not None:
     else:
         st.error(f"❗ 필수 컬럼이 누락되었습니다: {required_columns}")
 else:
-    st.info("👆 위에서 CSV 파일을 업로드하시면 예측 결과가 표시됩니다.")
+    st.info("👈 좌측에서 CSV 파일을 업로드하시면 예측 결과가 표시됩니다.")
 
-# Deployment Info
+# Custom footer
 st.markdown("""
 ---
-### ☁️ 처음 시도해보는 작업이라 많이 미흡하지만 더 학습해보도록 노력하겠습니다.
+[🔗 GitHub 저장소 바로가기](https://github.com/kod89/hypermax/tree/main)
+
+테스트 결과를 확인하려면 샘플 데이터를 다운로드하여 업로드하세요.
 """)
