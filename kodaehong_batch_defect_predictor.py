@@ -82,7 +82,7 @@ if uploaded_file is not None:
         )
 
         # Feature importance plot (Vertical bar chart for clarity)
-        st.subheader("주요 변수 중요도 시각화")
+        st.subheader("주요 변수 중요도")
         importance_df = pd.DataFrame({
             "Feature": feature_names,
             "Importance": feature_importances
@@ -101,7 +101,7 @@ if uploaded_file is not None:
     else:
         st.error(f"❗ 필수 컬럼이 누락되었습니다: {required_columns}")
 else:
-    st.info("👈 좌측에서 CSV 파일을 업로드하시면 예측 결과가 표시됩니다.")
+    st.info("👆 위에서 CSV 파일을 업로드하시면 예측 결과가 표시됩니다.")
 
 # Custom footer
 st.markdown("""
